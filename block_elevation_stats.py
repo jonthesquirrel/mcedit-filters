@@ -24,9 +24,16 @@ def logStat(block, elevation):
 logStat('Diamond', 1)
 logStat('Diamond', 1)
 logStat('Diamond', 0)
-print stats
 
 #open csv file, write object (keys in reverse order) to it
 #column = block, row = elevation + 1
-from os.path import expanduser
-filepath = expanduser('~') + '/Downloads'
+from os.path import expanduser, exists
+def filename():
+	prefix = expanduser('~') + '/Downloads/BlockElevationStats'
+	postfix = '.csv'
+	path = prefix + postfix
+	i = 1
+	while exists(path):
+		i += 1
+		path = prefix + str(i) + postfix
+	return path
