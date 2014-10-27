@@ -3,17 +3,30 @@
 
 #dictionary that maps block ids (to be collected) with readable names
 
-#iterate through world, adding collected freq data to object/array
-#def perform(level, box, options):
-#	level.blockAt(x, y, x,)
-data = [['elevation:', 1, 2, 3, 4, 5], ['Coal', 0, 1, 2, 3, 4], ['Iron', 2, 2, 2, 2, 2], ['Diamond', 4, 3, 2, 1, 0]]
+stats = {}
 
-#open csv file, write object to it
+#will be reference column in spreadsheet
+stats['elevation:'] = map(lambda x: 0, range(256))
+
+def logStat(block, elevation):
+	if not block in stats:
+	#initialize column
+		stats[block] = map(lambda x: 0, range(256))
+
+	#add to stat
+	stats[block][elevation] += 1
+
+#iterate through world and logStat()
+#def perform(level, box, options):
+#	level.blockAt(x, y, x)
+
+#test
+logStat('Diamond', 1)
+logStat('Diamond', 1)
+logStat('Diamond', 0)
+print stats
+
+#open csv file, write object (keys in reverse order) to it
+#column = block, row = elevation + 1
 from os.path import expanduser
 filepath = expanduser('~') + '/Downloads'
-
-#iteration test
-for column in range(len(data)):
-	print ''
-	for row in range(len(data[column])):
-		print data[column][row]
