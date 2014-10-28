@@ -39,7 +39,7 @@ def percentFormat():
 	for block in stats:
 		i = 0
 		for elevation in stats[block]:
-			stats[block][i] = ('%.9f' % (float(elevation)/layerTotal)) + '%'
+			stats[block][i] = float(elevation)/layerTotal
 			i += 1
 
 percentFormat()
