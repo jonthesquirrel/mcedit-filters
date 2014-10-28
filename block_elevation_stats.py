@@ -7,15 +7,15 @@ stats = {}
 def logStat(block, elevation):
 	if not block in stats:
 	#initialize column
-		stats[block] = map(lambda x: 0, range(256))
+		stats[block] = map(lambda x: 0.0, range(256))
 
 	#add to stat
 	stats[block][elevation] += 1
 
-#MCEdit calls this function
-#def perform(level, box, options):
-#	iterate through world and logStat()
-#	level.blockAt(x, y, x)
+#MCEdit user options
+inputs = (
+	('Scan Radius', 100)
+)
 
 #test
 logStat('Coal', 3)
@@ -23,6 +23,26 @@ logStat('Diamond', 1)
 logStat('Diamond', 1)
 logStat('Gold', 1)
 logStat('Diamond', 0)
+
+#init
+def perform(level, box, options):
+
+	#iterate through world and logStat(block, y)
+
+	level.blockAt(x, y, x)
+
+
+#calculate total blocks from scan radius, then convert raw data to percentage
+options = {'Scan Radius': 100}#temp
+layerTotal = (float(options['Scan Radius']) * 2) **2
+def percentFormat():
+	for block in stats:
+		i = 0
+		for elevation in stats[block]:
+			stats[block][i] = ('%.9f' % (float(elevation)/layerTotal)) + '%'
+			i += 1
+
+percentFormat()
 
 #open csv file, convert stats to data, write data to file
 from os.path import expanduser, exists
@@ -57,4 +77,4 @@ with open(filename(), 'wb') as csvFile:
 			writer.writerow([i] + row)
 		i += 1
 
-#TODO: move all stuff into functions, then call them from perform()
+#TODO: move all stuff, including functions, into perform()
